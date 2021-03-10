@@ -1,0 +1,68 @@
+https://copycoding.com/d/teradata-vs-snowflake-cloud-data-warehouse
+https://copycoding.com/d/teradata-to-snowflake-migration-guide
+
+Kandimala, Nagarjuna Rao (big data)
+Venkatachalapathy, Ashok Raj (cloud)
+
+
+number of columns need to be converted while migration :
+
+
+SELECT
+ColumnType,
+CASE
+WHEN ColumnType = '++' THEN 'TD_ANYTYPE'
+WHEN ColumnType = 'A1' THEN 'ARRAY'
+WHEN ColumnType = 'AN' THEN 'ARRAY'
+WHEN ColumnType = 'AT' THEN 'TIME'
+WHEN ColumnType = 'BF' THEN 'BYTE'
+WHEN ColumnType = 'BO' THEN 'BLOB'
+WHEN ColumnType = 'BV' THEN 'VARBYTE'
+WHEN ColumnType = 'CF' THEN 'CHAR'
+WHEN ColumnType = 'CO' THEN 'CLOB'
+WHEN ColumnType = 'CV' THEN 'VARCHAR'
+WHEN ColumnType = 'D' THEN 'DECIMAL'
+WHEN ColumnType = 'DA' THEN 'DATE'
+WHEN ColumnType = 'DH' THEN 'INTERVAL DAY TO HOUR'
+WHEN ColumnType = 'DM' THEN 'INTERVAL DAY TO MINUTE'
+WHEN ColumnType = 'DS' THEN 'INTERVAL DAY TO SECOND'
+WHEN ColumnType = 'DT' THEN 'DATASET'
+WHEN ColumnType = 'DY' THEN 'INTERVAL DAY'
+WHEN ColumnType = 'F' THEN 'FLOAT'
+WHEN ColumnType = 'HM' THEN 'INTERVAL HOUR TO MINUTE'
+WHEN ColumnType = 'HR' THEN 'INTERVAL HOUR'
+WHEN ColumnType = 'HS' THEN 'INTERVAL HOUR TO SECOND'
+WHEN ColumnType = 'I1' THEN 'BYTEINT'
+WHEN ColumnType = 'I2' THEN 'SMALLINT'
+WHEN ColumnType = 'I8' THEN 'BIGINT'
+WHEN ColumnType = 'I' THEN 'INTEGER'
+WHEN ColumnType = 'JN' THEN 'JSON'
+WHEN ColumnType = 'MI' THEN 'INTERVAL MINUTE'
+WHEN ColumnType = 'MO' THEN 'INTERVAL MONTH'
+WHEN ColumnType = 'MS' THEN 'INTERVAL MINUTE TO SECOND'
+WHEN ColumnType = 'N' THEN 'NUMBER'
+WHEN ColumnType = 'PD' THEN 'PERIOD(DATE)'
+WHEN ColumnType = 'PM' THEN 'PERIOD(TIMESTAMP WITH TIME ZONE)'
+WHEN ColumnType = 'PS' THEN 'PERIOD(TIMESTAMP)'
+WHEN ColumnType = 'PT' THEN 'PERIOD(TIME)'
+WHEN ColumnType = 'PZ' THEN 'PERIOD(TIME WITH TIME ZONE)'
+WHEN ColumnType = 'SC' THEN 'INTERVAL SECOND'
+WHEN ColumnType = 'SZ' THEN 'TIMESTAMP WITH TIME ZONE'
+WHEN ColumnType = 'TS' THEN 'TIMESTAMP'
+WHEN ColumnType = 'TZ' THEN 'TIME WITH TIME ZONE'
+WHEN ColumnType = 'UT' THEN 'UDT'
+WHEN ColumnType = 'XM' THEN 'XML'
+WHEN ColumnType = 'YM' THEN 'INTERVAL YEAR TO MONTH'
+WHEN ColumnType = 'YR' THEN 'INTERVAL YEAR'
+END AS Data_Type,
+COUNT(*) AS Data_Type_Count
+FROM DBC.ColumnsV
+WHERE DatabaseName NOT IN ('DBC', 'Crashdumps', 'dbcmngr', 'External_AP', 'EXTUSER', 'LockLogShredder',
+'QCD', 'SQLJ', 'Sys_Calendar', 'SysAdmin', 'SYSBAR', 'SYSJDBC', 'SYSLIB', 'SYSSPATIAL', 'SystemFE', 'SYSUDTLIB',
+'SYSUIF', 'TD_SERVER_DB', 'TD_SYSFNLIB', 'TD_SYSGPL', 'TD_SYSXML', 'TDPUSER', 'TDQCD', 'TDStats', 'tdwm')
+GROUP BY 1,2
+ORDER BY 1;
+
+
+
+
